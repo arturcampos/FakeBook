@@ -10,8 +10,9 @@
 		
 		<!--Atributos de classe -->
 		<property column="nomelogin" name="nomeLogin" type="java.lang.String"/>
-    	<property column="passe" name="senha" type="java.lang.String"/>
-    	<property column="nome" name="nomeUsuario" type="java.lang.String"/>
+    	        <property column="passe" name="senha" type="java.lang.String"/>
+    	        <property column="nome" name="nomeUsuario" type="java.lang.String"/>
+
 		
 		<set name="arquivos" table="arquivos" lazy="true" inverse="false"
 			fetch="select">
@@ -21,6 +22,13 @@
 			<one-to-many class="br.ufu.bau.dominio.arquivo"></one-to-many>
 		</set>
 		
+                <set name="amigos" table="amigos" lazy="true" inverse="true"
+			fetch="select">
+			<key>
+				<column name="FK_amigo" not-null="true" />
+			</key>
+			<many-to-many class="br.ufu.bau.dominio.usuario"></many-to-many>
+		</set>
 	</class>
 </hibernate-mapping>
 
