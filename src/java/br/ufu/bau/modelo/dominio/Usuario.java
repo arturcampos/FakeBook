@@ -17,12 +17,13 @@ import br.ufu.bau.modelo.repositorio.*;
 
 public class Usuario implements Serializable{
 	
-
-	private String nomeLogin;
+        private Long id;
 	
-	private Long id;
+        private String nomeLogin;
 
 	private String senha;
+        
+        private Perfil perfil;
 
 	private String nomeUsuario;
 	
@@ -37,7 +38,15 @@ public class Usuario implements Serializable{
 		this.amigos = amigos;
 		this.arquivos = arquivos;
 	}
+        
+        public void setId(Long id) {
+		this.id = id;
+	}
 
+
+	public Long getId() {
+		return id;
+	}
 
 	public String getSenha() {
 		return this.senha;
@@ -59,6 +68,10 @@ public class Usuario implements Serializable{
 		return this.nomeLogin;
 	}
 	
+         public boolean idAdmin(){
+            return perfil.equals(Perfil.ADMINISTRADOR);
+        }
+
 	public void addAmigo(Usuario amigo)
 	{
 		RepositorioSpecifico<Usuario, Long> dao = new RepositorioSpecifico<Usuario, Long>(Usuario.class);
@@ -102,14 +115,16 @@ public class Usuario implements Serializable{
 		return this.arquivos;
 	}
 
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-
-	public Long getId() {
-		return id;
-	}
+        public List<Arquivo> todosOsArquivos()
+        {
+            if(this.isAdmin()){
+            RepositorioImp<Arquivo, Long> dao = new RepositorioImp<Arquivo, Long>(Arquivo.class);
+            this.arquivos = dao.listaTodos();
+            return this.arquivos;
+            }
+            return null;    
+        }
 	
+	
+
 }
